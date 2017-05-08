@@ -36,9 +36,7 @@ namespace Koans.Lessons
         }
 
         //Q: Which interface Rx apply? (hint: what does "Return()" return)
-
         //A:
-
         [Fact]
         public void ThisIsTheSameAsAnEventStream()
         {
@@ -48,9 +46,7 @@ namespace Koans.Lessons
         }
 
         //Q: What is the relationship between "ThisIsTheSameAsAnEventStream()" and "SimpleSubscription()"?
-
         //A:
-
         [Fact]
         public void HowEventStreamsRelateToObservables()
         {
@@ -64,10 +60,7 @@ namespace Koans.Lessons
         }
 
         //Q: What does Observable.Return() map to for a Subject?
-
         //A:
-
-
         [Fact]
         public void EventStreamsHaveMultipleEvents()
         {
@@ -80,10 +73,7 @@ namespace Koans.Lessons
         }
 
         //Q: What does Observable.Return() map to for a Subject?
-
         //A:
-
-
         [Fact]
         public void SimpleReturn()
         {
