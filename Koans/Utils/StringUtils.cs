@@ -17,21 +17,21 @@ namespace Koans.Utils
 
 		public static string AsString(this IEnumerable<object> list)
 		{
-			return "[" + String.Join(", ", list.Select(x => x.ToString())) + "]";
+			return "[" + string.Join(", ", list.Select(x => x.ToString())) + "]";
 		}
 
 		public static string ___(this string s)
 		{
 			var r = call((object) s, null);
-			return (String) r;
+			return (string) r;
 		}
 
-		public static object ___(this Object o)
+		public static object ___(this object o)
 		{
 			var r = call(o, null);
 			return r;
 		}
-		public static object ___(this Object o, object b)
+		public static object ___(this object o, object b)
 		{
 			var r = call(o, new []{b});
 			return r;
@@ -56,8 +56,8 @@ namespace Koans.Utils
 
 		public static void Run<T>(this IObservable<T> source, Action<T> onNext)
 		{
-			ManualResetEvent evt = new ManualResetEvent(false);
-			using (IDisposable disposable = source.Subscribe(onNext, (ex) => evt.Set(), () => evt.Set()))
+			var evt = new ManualResetEvent(false);
+			using (var disposable = source.Subscribe(onNext, (ex) => evt.Set(), () => evt.Set()))
 			{
 				evt.WaitOne();
 			}

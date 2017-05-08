@@ -1,107 +1,121 @@
 using System;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Koans.Lessons
 {
-    [TestClass]
-    public class Lesson0Lambdas
-    {
-        /*
+    /*
          * How to Run: Press Ctrl+R,T (go ahead, try it now)
          * Step 1: find the 1st method that fails
          * Step 2: Fill in the blank ____ to make it pass
          * Step 3: run it again
          * Note: Do not change anything other than the blank
          */
+    public class Lesson0Lambdas
+    {
+        public object ___ = "Please Fill in the blank";
+        public bool ____ = true;
+        public char _____ = '_';
+        private StringBuilder singing;
+        public int _______ = 0;
 
-        [TestMethod]
+        private object ReadTheErrorMessageToFigureOutWhatThisReturns()
+        {
+            return "Harry Potter";
+        }
+
+        [Fact]
         public void GettingStarted1ReadingTheErrorMessage()
         {
-            Assert.AreEqual(___, ReadTheErrorMessageToFigureOutWhatThisReturns());
+            Assert.Equal(___, ReadTheErrorMessageToFigureOutWhatThisReturns());
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasAreBlocksOfCode()
         {
-            Run(() => Assert.AreEqual(true, ___));
+            Run(() => Assert.Equal(true, ___));
         }
-        [TestMethod]
+
+        [Fact]
         public void LambdasAreActions()
         {
-            Action lambda = () => Assert.AreEqual(true, ___);
+            Action lambda = () => Assert.Equal(true, ___);
             lambda();
         }
-        [TestMethod]
+
+        [Fact]
         public void LambdasAreNotRunAtDeclaration()
         {
-            int i = 1;
+            var i = 1;
             var dictionary = new Dictionary<char, object>();
             dictionary['a'] = i++;
             dictionary['b'] = (Action)(() => i++);
             dictionary['c'] = i++;
-            Assert.AreEqual(1, dictionary['a']);
-            Assert.AreEqual(_______, dictionary['c']);
-        }
-        //Q: Why didn't the i++ get run for dictionary entry b ?
-        //A: 
-        [TestMethod]
-        public void ButLambdasMightNotBeCalled()
-        {
-            RunIfNeeded(shouldActionBeRun: ____, action: () => Assert.Fail("Don't Run This"));
+            Assert.Equal(1, dictionary['a']);
+            Assert.Equal(_______, dictionary['c']);
         }
 
-        [TestMethod]
+        //Q: Why didn't the i++ get run for dictionary entry b ?
+        //A:
+        [Fact]
+        public void ButLambdasMightNotBeCalled()
+        {
+            RunIfNeeded(shouldActionBeRun: ____, action: () => Assert.True(false, "Don't Run This"));
+        }
+
+        [Fact]
         public void LambdasCanUseLocalVariables()
         {
             var lambdaStatus = ___;
-            Run(() => Assert.AreEqual("Awesome!", lambdaStatus));
+            Run(() => Assert.Equal("Awesome!", lambdaStatus));
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasAreTinyMethods()
         {
-            RunWithValue(___, (s) => Assert.AreEqual("Passed In", s));
+            RunWithValue(___, (s) => Assert.Equal("Passed In", s));
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasCanReturnAValue()
         {
             var message = HiFive(() => { return ___; });
-            Assert.AreEqual("Hey Bart, Give me 5", message);
+            Assert.Equal("Hey Bart, Give me 5", message);
         }
-        [TestMethod]
+
+        [Fact]
         public void LambdasAutomaticallyReturnSingleStatements()
         {
             var message = HiFive(() => ___);
-            Assert.AreEqual("Hey Llewellyn, Give me 5", message);
+            Assert.Equal("Hey Llewellyn, Give me 5", message);
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasCanUseParametersInReturn()
         {
             var message = Run(___, (p) => p + 1);
-            Assert.AreEqual(6, message);
+            Assert.Equal(6, message);
         }
-        [TestMethod]
+
+        [Fact]
         public void LambdasThatReturnAreCalledFunctions()
         {
             Func<int, int> lambda = (a) => a * a;
-            Assert.AreEqual(___, lambda(5));
+            Assert.Equal(___, lambda(5));
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasCanBeVeryTerse()
         {
             int count = Run("12345678", s => s.Length);
-            Assert.AreEqual(___, count);
+            Assert.Equal(___, count);
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdasCanBeVeryVerbose()
         {
-            var count = Run("a1a2a3a4", _____, (String given, char remove) =>
+            var count = Run("a1a2a3a4", _____, (string given, char remove) =>
                                                    {
                                                        var text = new StringBuilder();
                                                        foreach (var c in given)
@@ -113,10 +127,10 @@ namespace Koans.Lessons
                                                        }
                                                        return text.ToString();
                                                    });
-            Assert.AreEqual("1234", count);
+            Assert.Equal("1234", count);
         }
 
-        [TestMethod]
+        [Fact]
         public void MethodDuplication1Of2()
         {
             StartSong();
@@ -138,7 +152,7 @@ namespace Koans.Lessons
             AssertCatSong();
         }
 
-        [TestMethod]
+        [Fact]
         public void MethodDuplication2Of2()
         {
             StartSong();
@@ -150,6 +164,7 @@ namespace Koans.Lessons
 
             AssertCatSong();
         }
+
         //Q: How did we remove all the duplication from method 1 of 2?
         //A:
         private void SingVerse()
@@ -161,7 +176,7 @@ namespace Koans.Lessons
             Sing("But the cat came back, he just wouldn't go away");
         }
 
-        [TestMethod]
+        [Fact]
         public void ParameterDuplication1Of2()
         {
             StartSong();
@@ -177,7 +192,7 @@ namespace Koans.Lessons
             AssertBeerSong();
         }
 
-        [TestMethod]
+        [Fact]
         public void ParameterDuplication2Of2()
         {
             StartSong();
@@ -186,9 +201,10 @@ namespace Koans.Lessons
 
             AssertBeerSong();
         }
+
         //Q: Since the duplication was not exact, how did we remove all the duplication from method 1 of 2?
         //A:
-        private void SingVerse(Object num)
+        private void SingVerse(object num)
         {
             Sing(num + " bottles of beer on the wall");
             Sing(num + " bottles of beer");
@@ -196,7 +212,7 @@ namespace Koans.Lessons
             Sing(num + " bottles of beer on the wall");
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdaDuplication1Of2()
         {
             StartSong();
@@ -224,7 +240,7 @@ namespace Koans.Lessons
             AssertNumberSong();
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdaDuplication2Of2()
         {
             StartSong();
@@ -232,9 +248,10 @@ namespace Koans.Lessons
             SingVerse(17, (int n) => GetNextPrime(n), "These are the primes, that we find fine!");
             AssertNumberSong();
         }
+
         //Q: Since the duplication was not exact, and it wasn't just a value, how did we remove all the duplication from method 1 of 2?
         //A:
-        //Lambdas allow you to create API from what used to be written as patterns. 
+        //Lambdas allow you to create API from what used to be written as patterns.
         //Reactive framework is using Lambdas to create an API for the best practices of Asychronous programming patterns.
         private void SingVerse(int number, Func<int, int> func, string endWith)
         {
@@ -253,7 +270,7 @@ namespace Koans.Lessons
         private void AssertNumberSong()
         {
             var song = "2! 4! 6! 8! Who do we appreciate?17! 19! 23! 29! These are the primes, that we find fine!";
-            Assert.AreEqual(song, singing.ToString());
+            Assert.Equal(song, singing.ToString());
         }
 
         private int GetNextPrime(int number)
@@ -268,23 +285,23 @@ namespace Koans.Lessons
                     return 23;
                 case 23:
                     return 29;
+                default:
+                    return 0;
             }
-            return 0;
         }
-
 
         private void AssertBeerSong()
         {
             var song =
                 "100 bottles of beer on the wall100 bottles of beerTake one down, pass it around100 bottles of beer on the wall99 bottles of beer on the wall99 bottles of beerTake one down, pass it around99 bottles of beer on the wall";
-            Assert.AreEqual(song, singing.ToString());
+            Assert.Equal(song, singing.ToString());
         }
 
         private void AssertCatSong()
         {
             var catSong =
                 "We gave the cat to a little kidBut the cat came backThe very next dayOh the cat came backWe thought he was a gonerBut the cat came back, he just wouldn't go awayWe sent the cat out on a boatBut the cat came backThe very next dayOh the cat came backWe thought he was a gonerBut the cat came back, he just wouldn't go away";
-            Assert.AreEqual(catSong, singing.ToString());
+            Assert.Equal(catSong, singing.ToString());
         }
 
         private void StartSong()
@@ -312,7 +329,6 @@ namespace Koans.Lessons
             return "Hey " + func() + ", Give me 5";
         }
 
-
         private void RunWithValue(object p, Action<object> action)
         {
             action(p);
@@ -329,21 +345,6 @@ namespace Koans.Lessons
             {
                 action();
             }
-        }
-
-        #endregion
-
-        #region Ignore
-
-        public object ___ = "Please Fill in the blank";
-        public bool ____ = true;
-        public char _____ = '_';
-        private StringBuilder singing;
-        public int _______ = 0;
-
-        private object ReadTheErrorMessageToFigureOutWhatThisReturns()
-        {
-            return "Harry Potter";
         }
 
         #endregion

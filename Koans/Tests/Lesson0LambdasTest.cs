@@ -1,14 +1,14 @@
 ﻿using System;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson0Lambdas;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson0LambdasTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             KoanUtils.Verify<CurrentLesson>(l => l.LambdasAreBlocksOfCode(), true);

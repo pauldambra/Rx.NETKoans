@@ -6,97 +6,111 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+
 
 namespace Koans.Lessons
 {
-    [TestClass]
-    public class Lesson1ObservableStreams
-    {
-        /*
+    /*
      * How to Run: Press Ctrl+R,T (go ahead, try it now)
      * Step 1: find the 1st method that fails
      * Step 2: Fill in the blank ____ to make it pass
      * Step 3: run it again
      * Note: Do not change anything other than the blank
      */
+    public class Lesson1ObservableStreams
+    {
+        public object ___ = "Please Fill in the blank";
+        public int ____ = 100;
 
-        [TestMethod]
+        [Fact]
         public void SimpleSubscription()
         {
-            Observable.Return(42).Subscribe(x => Assert.AreEqual(___, x));
+            Observable.Return(42).Subscribe(x => Assert.Equal(___, x));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhatGoesInComesOut()
         {
-            Observable.Return(___).Subscribe(x => Assert.AreEqual(101, x));
+            Observable.Return(___).Subscribe(x => Assert.Equal(101, x));
         }
+
         //Q: Which interface Rx apply? (hint: what does "Return()" return)
+
         //A:
-        [TestMethod]
+
+        [Fact]
         public void ThisIsTheSameAsAnEventStream()
         {
             var events = new Subject<int>();
-            events.Subscribe(x => Assert.AreEqual(___, x));
+            events.Subscribe(x => Assert.Equal(___, x));
             events.OnNext(37);
         }
+
         //Q: What is the relationship between "ThisIsTheSameAsAnEventStream()" and "SimpleSubscription()"?
+
         //A:
-        [TestMethod]
+
+        [Fact]
         public void HowEventStreamsRelateToObservables()
         {
-            int observableResult = 1;
+            var observableResult = 1;
             Observable.Return(73).Subscribe(i => observableResult = i);
-            int eventStreamResult = 1;
+            var eventStreamResult = 1;
             var events = new Subject<int>();
             events.Subscribe(i => eventStreamResult = i);
             events.___(73);
-            Assert.AreEqual(observableResult, eventStreamResult);
+            Assert.Equal(observableResult, eventStreamResult);
         }
+
         //Q: What does Observable.Return() map to for a Subject?
+
         //A:
 
-        [TestMethod]
+
+        [Fact]
         public void EventStreamsHaveMultipleEvents()
         {
-            int eventStreamResult = 0;
+            var eventStreamResult = 0;
             var events = new Subject<int>();
             events.Subscribe(i => eventStreamResult += i);
             events.OnNext(10);
             events.OnNext(7);
-            Assert.AreEqual(____, eventStreamResult);
+            Assert.Equal(____, eventStreamResult);
         }
+
         //Q: What does Observable.Return() map to for a Subject?
+
         //A:
 
-        [TestMethod]
+
+        [Fact]
         public void SimpleReturn()
         {
             var received = "";
             Observable.Return("Foo").Subscribe((string s) => received = s);
-            Assert.AreEqual(___, received);
+            Assert.Equal(___, received);
         }
 
-        [TestMethod]
+        [Fact]
         public void TheLastEvent()
         {
             var received = "";
             var names = new[] { "Foo", "Bar" };
             names.ToObservable().Subscribe((s) => received = s);
-            Assert.AreEqual(___, received);
+            Assert.Equal(___, received);
         }
 
-        [TestMethod]
+        [Fact]
         public void EveryThingCounts()
         {
             var received = 0;
             var numbers = new[] { 3, 4 };
             numbers.ToObservable().Subscribe((int x) => received += x);
-            Assert.AreEqual(___, received);
+            Assert.Equal(___, received);
         }
 
-        [TestMethod]
+        [Fact]
         public void ThisIsStillAnEventStream()
         {
             var received = 0;
@@ -104,39 +118,39 @@ namespace Koans.Lessons
             numbers.Subscribe((int x) => received += x);
             numbers.OnNext(10);
             numbers.OnNext(5);
-            Assert.AreEqual(___, received);
+            Assert.Equal(___, received);
         }
 
-        [TestMethod]
+        [Fact]
         public void AllEventsWillBeRecieved()
         {
             var received = "Working ";
             var numbers = Range.Create(9, 5);
             numbers.ToObservable().Subscribe((int x) => received += x);
-            Assert.AreEqual(___, received);
+            Assert.Equal(___, received);
         }
 
-        [TestMethod]
+        [Fact]
         public void DoingInTheMiddle()
         {
-            var status = new List<String>();
+            var status = new List<string>();
             var daysTillTest = Range.Create(4, 1).ToObservable();
             daysTillTest.Do(d => status.Add(d + "=" + (d == 1 ? "Study Like Mad" : ___))).Subscribe();
-            Assert.AreEqual("[4=Party, 3=Party, 2=Party, 1=Study Like Mad]", status.AsString());
+            Assert.Equal("[4=Party, 3=Party, 2=Party, 1=Study Like Mad]", status.AsString());
         }
 
-        [TestMethod]
+        [Fact]
         public void NothingListensUntilYouSubscribe()
         {
             var sum = 0;
             var numbers = Range.Create(1, 10).ToObservable();
             var observable = numbers.Do(n => sum += n);
-            Assert.AreEqual(0, sum);
+            Assert.Equal(0, sum);
             observable.___();
-            Assert.AreEqual(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10, sum);
+            Assert.Equal(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10, sum);
         }
 
-        [TestMethod]
+        [Fact]
         public void EventsBeforeYouSubscribedDoNotCount()
         {
             var sum = 0;
@@ -147,10 +161,10 @@ namespace Koans.Lessons
             observable.Subscribe();
             numbers.OnNext(3);
             numbers.OnNext(4);
-            Assert.AreEqual(___, sum);
+            Assert.Equal(___, sum);
         }
 
-        [TestMethod]
+        [Fact]
         public void EventsAfterYouUnsubscribDoNotCount()
         {
             var sum = 0;
@@ -162,9 +176,10 @@ namespace Koans.Lessons
             subscription.Dispose();
             numbers.OnNext(3);
             numbers.OnNext(4);
-            Assert.AreEqual(___, sum);
+            Assert.Equal(___, sum);
         }
-        [TestMethod]
+
+        [Fact]
         public void EventsWhileSubscribing()
         {
             var recieved = new List<string>();
@@ -178,41 +193,35 @@ namespace Koans.Lessons
             words.OnNext("pretty");
             subscription.Dispose();
             words.OnNext("ugly");
-            Assert.AreEqual(___, String.Join(" ", recieved));
+            Assert.Equal(___, string.Join(" ", recieved));
         }
 
-        [TestMethod]
+        [Fact]
         public void UnsubscribeAtAnyTime()
         {
             var received = "";
             var numbers = Range.Create(1, 9);
             IDisposable un = null;
             un = numbers.ToObservable(NewThreadScheduler.Default).Subscribe((int x) =>
-                                                                                                                                {
-                                                                                                                                    received += x;
-                                                                                                                                    if (x == 5)
-                                                                                                                                    {
-                                                                                                                                        un.___();
-                                                                                                                                    }
-                                                                                                                                });
+                                                                                {
+                                                                                    received += x;
+                                                                                    if (x == 5)
+                                                                                    {
+                                                                                        un.___();
+                                                                                    }
+                                                                                });
             Thread.Sleep(100);
-            Assert.AreEqual("12345", received);
+            Assert.Equal("12345", received);
         }
 
-        [TestMethod]
+        [Fact]
         public void TakeUntilFull()
         {
             var received = "";
             var subject = new Subject<int>();
             subject.TakeUntil(subject.Where(x => x > ____)).Subscribe(x => received += x);
             subject.OnNext(Range.Create(1, 9).ToArray());
-            Assert.AreEqual("12345", received);
+            Assert.Equal("12345", received);
         }
-        #region Ignore
-
-        public object ___ = "Please Fill in the blank";
-        public int ____ = 100;
-
-        #endregion
     }
 }

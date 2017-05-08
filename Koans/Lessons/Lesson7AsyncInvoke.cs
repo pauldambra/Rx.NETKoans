@@ -4,14 +4,21 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+
 
 namespace Koans.Lessons
 {
-    [TestClass]
+
     public class Lesson7AsyncInvoke
     {
-        [TestMethod]
+        public const int __ = 1000;
+        public int ___ = 0;
+        public string ____ = "Please Fill in the blank";
+        public object _____ = "Please Fill in the blank";
+        public object ______ = "Please Fill in the blank";
+
+        [Fact]
         public void TheBloodyHardAsyncInvokationPatter()
         {
             // You need to fill in the 3 ___'s with A,B & C in the order they will execute
@@ -35,11 +42,11 @@ namespace Koans.Lessons
                                            sub.OnCompleted();
                                        }, null);
             ThreadUtils.WaitUntil(() => result != 0);
-            Assert.AreEqual(50.5, result);
-            Assert.AreEqual("ABC", called);
+            Assert.Equal(50.5, result);
+            Assert.Equal("ABC", called);
         }
 
-        //[TestMethod]
+        //[Fact]
         //public void NiceAndEasyFromAsyncPattern()
         //{
         //	Func<int, double> halve = x => x*0.5;
@@ -47,12 +54,10 @@ namespace Koans.Lessons
         //	var asyncInvoker = Observable.FromAsyncPattern<int, double>(halve.BeginInvoke,
         //	                                                            halve.EndInvoke);
         //	asyncInvoker(___).SubscribeOn(Scheduler.Immediate).Run(n => result = n);
-
-        //	Assert.AreEqual(24, result);
+        //	Assert.Equal(24, result);
         //}
 
-        //[TestMethod]
-        //[Timeout(__)]
+        //[Fact]
         //public void AsynchronousRunInParallel()
         //{
         //	Func<int, int> inc = (int x) =>
@@ -64,10 +69,11 @@ namespace Koans.Lessons
         //	var incAsync = Observable.FromAsyncPattern<int, int>(inc.BeginInvoke,
         //	                                                     inc.EndInvoke);
         //	incAsync(1).Merge(incAsync(9)).Sum().SubscribeOn(Scheduler.Immediate).Subscribe(n => result = n);
-        //	Assert.AreEqual(12, result);
+        //	Assert.Equal(12, result);
         //}
 
-        [TestMethod]
+
+        [Fact]
         public void AsyncLongRunningTimeout()
         {
             Func<int, string> highFive = x =>
@@ -79,15 +85,15 @@ namespace Koans.Lessons
             var incAsync = highFive.ToAsync();
             var timeout = TimeSpan.FromMilliseconds(500);
             incAsync(5).Timeout(timeout, Observable.Return("Too Slow Joe")).SubscribeOn(Scheduler.Immediate).Subscribe(n => result = n);
-            Assert.AreEqual(___, result);
+            Assert.Equal(____, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void TimeoutMeansStopListeningDoesNotMeanAbort()
         {
             string result = null;
             string returned = null;
-            Func<string, String> highFive = n =>
+            Func<string, string> highFive = n =>
                                                 {
                                                     Thread.Sleep(900);
                                                     result = "Give me 5, " + n;
@@ -97,11 +103,11 @@ namespace Koans.Lessons
             var timeout = TimeSpan.FromMilliseconds(500);
             async("Joe").Timeout(timeout, Observable.Return("Too Slow Joe")).SubscribeOn(Scheduler.Immediate).Subscribe(s => returned = s);
             ThreadUtils.WaitUntil(() => result != null);
-            Assert.AreEqual("Too Slow Joe", returned);
-            Assert.AreEqual(result, ____);
+            Assert.Equal("Too Slow Joe", returned);
+            Assert.Equal(result, ____);
         }
 
-        [TestMethod]
+        [Fact]
         public void AsynchronousObjectsAreProperlyDisposed()
         {
             Func<int, string> highFive = x =>
@@ -111,23 +117,13 @@ namespace Koans.Lessons
                                              };
             string disposed = null;
             var incAsync = highFive.ToAsync();
-            var timeout = TimeSpan.FromMilliseconds(500);
+//            var timeout = TimeSpan.FromMilliseconds(500);
             Func<int, IObservable<string>> launch = (int i) => incAsync(i).Finally(() => disposed += ____ + i + ",");
             var all = launch(1).Merge(launch(2)).Merge(launch(3)).Merge(launch(4)).Merge(launch(5));
 
             all.Run();
 
-            Assert.AreEqual("D1,D2,D3,D4,D5,", disposed);
+            Assert.Equal("D1,D2,D3,D4,D5,", disposed);
         }
-
-        #region Ignore
-
-        public const int __ = 1000;
-        public int ___ = 0;
-        public string ____ = "Please Fill in the blank";
-        public object _____ = "Please Fill in the blank";
-        public object ______ = "Please Fill in the blank";
-
-        #endregion
     }
 }

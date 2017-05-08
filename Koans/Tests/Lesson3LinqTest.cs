@@ -1,14 +1,14 @@
 ﻿using System.Drawing;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson3Linq;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson3LinqTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             KoanUtils.Verify<CurrentLesson>(l => l.Linq(), 11);

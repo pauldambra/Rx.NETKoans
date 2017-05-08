@@ -1,15 +1,16 @@
 ﻿using System;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using CurrentLesson = Koans.Lessons.Lesson1ObservableStreams;
 using System.Reactive.Subjects;
+using Xunit;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson1ObservableStreamsTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             KoanUtils.Verify<CurrentLesson>(l => l.SimpleSubscription(), 42);

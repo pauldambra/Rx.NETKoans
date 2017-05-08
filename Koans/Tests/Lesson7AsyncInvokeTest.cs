@@ -1,15 +1,15 @@
 ﻿using System;
 using Koans.Lessons;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson7AsyncInvoke;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson7AsyncInvokeTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             Action<Lesson7AsyncInvoke> action = l => { l.____ = "C"; l._____ = "A"; l.______ = "B"; };

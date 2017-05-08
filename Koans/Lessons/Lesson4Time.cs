@@ -5,34 +5,35 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System.Linq;
+using Xunit;
 
 namespace Koans.Lessons
 {
-    [TestClass]
-    public class Lesson4Time
-    {
-        /*
+    /*
          * How to Run: Press Ctrl+R,T (go ahead, try it now)
          * Step 1: find the 1st method that fails
          * Step 2: Fill in the blank ____ to make it pass
          * Step 3: run it again
          * Note: Do not change anything other than the blank
          */
+    public class Lesson4Time
+    {
+        public int ___ = 3;
+        public object ____ = "Please Fill in the blank";
 
-        [TestMethod]
-        [Timeout(2000)]
+
+        [Fact]
         public void LaunchingAnActionInTheFuture()
         {
-            string received = "";
-            TimeSpan delay = TimeSpan.FromSeconds(___);
+            var received = "";
+            var delay = TimeSpan.FromSeconds(___);
             Scheduler.Immediate.Schedule(delay, () => received = "Finished");
-            Assert.AreEqual("Finished", received);
+            Assert.Equal("Finished", received);
         }
 
-        [TestMethod]
-        [Timeout(2000)]
+        [Fact]
         public void LaunchingAnEventInTheFuture()
         {
             string received = null;
@@ -41,10 +42,10 @@ namespace Koans.Lessons
             people.Delay(time).Subscribe(x => received = x);
             people.OnNext("Godot");
             ThreadUtils.WaitUntil(()=> received != null );
-            Assert.AreEqual("Godot", received);
+            Assert.Equal("Godot", received);
         }
 
-        [TestMethod]
+        [Fact]
         public void YouCanPlaceATimelimitOnHowLongAnEventShouldTake()
         {
             var received = new List<string>();
@@ -56,11 +57,10 @@ namespace Koans.Lessons
             Thread.Sleep(___);
             temperatures.OnNext("Boiling");
             ThreadUtils.WaitUntil(() => received != null);
-            Assert.AreEqual("Started, Tepid", String.Join(", ", received));
+            Assert.Equal("Started, Tepid", string.Join(", ", received));
         }
 
-        [TestMethod]
-        [Timeout(2000)]
+        [Fact]
         public void Throttling()
         {
             var received = new List<string>();
@@ -79,15 +79,15 @@ namespace Koans.Lessons
 
             Thread.Sleep(120);
 
-            Assert.AreEqual(____, String.Join(" ", received));
+            Assert.Equal(____, string.Join(" ", received));
         }
-        [TestMethod]
-        [Timeout(2000)]
+
+        [Fact]
         public void Buffering()
         {
-            var received = new List<String>();
+            var received = new List<string>();
             var events = new Subject<char>();
-            events.Buffer(TimeSpan.FromMilliseconds(100)).Select(c => new String(c.ToArray())).Subscribe(s => received.Add(s));
+            events.Buffer(TimeSpan.FromMilliseconds(100)).Select(c => new string(c.ToArray())).Subscribe(s => received.Add(s));
           events.OnNext('S');
             events.OnNext('c');
             events.OnNext('o');
@@ -101,14 +101,14 @@ namespace Koans.Lessons
             events.OnNext('d');
             Thread.Sleep(120);
 
-            Assert.AreEqual(____, String.Join(" ", received));
+            Assert.Equal(____, string.Join(" ", received));
         }
-        [TestMethod]
-        [Timeout(2000)]
+
+        [Fact]
         public void TimeBetweenCalls()
         {
-            var received = new List<String>();
-            var events = new Subject<String>();
+            var received = new List<string>();
+            var events = new Subject<string>();
             events.TimeInterval().Where(t => t.Interval.TotalMilliseconds > 100).Subscribe(s => received.Add(s.Value));
             events.OnNext("too");
             events.OnNext("fast");
@@ -117,16 +117,7 @@ namespace Koans.Lessons
             Thread.Sleep(120);
             events.OnNext("down");
 
-            Assert.AreEqual(____, String.Join(" ", received));
+            Assert.Equal(____, string.Join(" ", received));
         }
-
-
-        #region Ignore
-
-        public int ___ = 3;
-        public object ____ = "Please Fill in the blank";
-
-
-        #endregion
     }
 }

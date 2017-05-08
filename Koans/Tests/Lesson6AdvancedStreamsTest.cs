@@ -1,14 +1,14 @@
 ﻿using System;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson6AdvancedStreams;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson6AdvancedStreamsTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             KoanUtils.Verify<CurrentLesson>(l => l.Merging(), "1 A 2 B 3 C ");

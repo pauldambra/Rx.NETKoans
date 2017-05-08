@@ -1,15 +1,14 @@
 ﻿using System;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson4Time;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson4TimeTest
     {
-        [TestMethod]
-
+        [Fact]
         public void TestAllQuestions()
         {
             //KoanUtils.Verify<CurrentLesson>(l => l.LaunchingAnActionInTheFuture(), 0);

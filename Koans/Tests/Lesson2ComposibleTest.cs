@@ -1,14 +1,14 @@
 ﻿using System;
 using Koans.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using CurrentLesson = Koans.Lessons.Lesson2ComposableObservations;
 
 namespace Koans.Tests
 {
-    [TestClass]
+
     public class Lesson2ComposibleTest
     {
-        [TestMethod]
+        [Fact]
         public void TestAllQuestions()
         {
             KoanUtils.Verify<CurrentLesson>(l => l.ComposableAddition(), 1000);

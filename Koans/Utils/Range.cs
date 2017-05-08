@@ -6,8 +6,8 @@ namespace Koans.Utils
     {
         public static IEnumerable<int> Create(int start, int end)
         {
-            int current = start;
-            int step = start < end ? 1 : -1;
+            var current = start;
+            var step = start < end ? 1 : -1;
             yield return current;
             while (current != end)
             {

@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+
 
 namespace Koans.Utils
 {
@@ -26,7 +27,7 @@ namespace Koans.Utils
 				String.Format(
 					"Assert.IsInstanceOfType failed.  Expected type:<System.String>. Actual type:<{0}>.",
 					expected);
-			Assert.AreEqual(s, expectedMessage);
+			Assert.Equal(s, expectedMessage);
 		}
 
 		public static void AssertLesson<T>(Action<T> test, Action<T> answer) where T : new()
@@ -57,7 +58,7 @@ namespace Koans.Utils
 			{
 				failed = true;
 			}
-			Assert.IsTrue(failed, "The Lesson is already passing [Need to add a blank]");
+			Assert.True(failed, "The Lesson is already passing [Need to add a blank]");
 		}
 
 		public static void FillAll(this object lesson, object answer)

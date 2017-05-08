@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+
 
 namespace Koans.Lessons
 {
-    [TestClass]
+
     public class Lesson5Events
     {
         public event EventHandler<TextChangedEventArgs> TextChanged;
 
-        [TestMethod]
+        public const int ____ = 1000;
+        public object ___ = "Please Fill in the blank";
+
+        public Lesson5Events()
+        {
+            TextChanged += (o, e) => { };
+        }
+
+        [Fact]
         public void TheMainEvent()
         {
             var received = new StringBuilder();
@@ -22,20 +31,8 @@ namespace Koans.Lessons
                 TextChanged(null, new TextChangedEventArgs { value = "R" });
             }
             TextChanged(null, new TextChangedEventArgs { value = "T" });
-            Assert.AreEqual(___, received.ToString());
+            Assert.Equal(___, received.ToString());
         }
-
-        #region Ignore
-
-        public const int ____ = 1000;
-        public object ___ = "Please Fill in the blank";
-
-        public Lesson5Events()
-        {
-            TextChanged += (o, e) => { };
-        }
-
-        #endregion
     }
 
     public class TextChangedEventArgs : EventArgs
